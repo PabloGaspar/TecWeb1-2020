@@ -13,6 +13,7 @@ namespace GeneralConcepts.DelegatesAndLambdas
             // action for void functions
             Action<Employee, string, int> action = populateEmployee;
             populateEmployee(qa, "Peter", 22);
+            action(qa, "Peter", 22);
 
             // func for return methods
             Func<Employee, string, int, string> func = populateAndShowEmployee;
@@ -25,6 +26,9 @@ namespace GeneralConcepts.DelegatesAndLambdas
                 employee.Name = name;
                 employee.Age = age;
             };
+
+            Func<string, string> show = name =>  name.ToUpper();
+            var res = show("andres");
 
             Func<Employee, string, int, string> lambdaFunc = (employee, name, age) => {
                 employee.Name = name;

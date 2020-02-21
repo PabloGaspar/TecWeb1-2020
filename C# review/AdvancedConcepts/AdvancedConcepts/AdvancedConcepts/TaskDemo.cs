@@ -10,9 +10,9 @@ namespace AdvancedConcepts
     {
         public static async Task Test()
         {
-            TestTaskBasics();
+            //TestTaskBasics();
             TestChef();
-            TestChefAsync();
+            //TestChefAsync();
             while (true)
             {
                 string result = Console.ReadLine();
@@ -76,22 +76,24 @@ namespace AdvancedConcepts
                 }
                 return ctr;
             }).GetAwaiter();
-            Console.WriteLine("Finished {0:N0} iterations.", taskWithResult.Result);
+            Console.WriteLine("Finished {0:N0} iterations.", taskWithResult2.GetResult());
         }
 
-        public static void TestChef()
+        public static async Task TestChef()
         {
             Console.Clear();
 
             var chef = new Chef();
 
-            var chicken =   chef.PutChickenInTheOven();
-            Console.WriteLine($"{chicken} : is ready");
+            var chickenAsync =   chef.PutChickenInTheOvenAsync();
+            //Console.WriteLine($"{chicken} : is ready");
 
             Thread.Sleep(1000);
 
             var salad = chef.PrepareSalad();
             Console.WriteLine($"{salad} : is ready");
+            var chicken = await chickenAsync;
+            Console.WriteLine($"{chicken} : is ready");
         }
 
         public async static Task TestChefAsync()
@@ -114,11 +116,14 @@ namespace AdvancedConcepts
 
     public class Chef
     {
-        public string PutChickenInTheOven()
+        public async Task<string> PutChickenInTheOvenAsync()
         {
-            Console.WriteLine("putting the chicken in the oven");
-            Thread.Sleep(10000);
-            Console.WriteLine("getting the chicken from the oven");
+            var t = Task.Run(()=> {
+                Console.WriteLine("putting the chicken in the oven");
+                Thread.Sleep(20000);
+                Console.WriteLine("getting the chicken from the oven");
+            });
+            await t;
             return "fried chicken";
         }
 

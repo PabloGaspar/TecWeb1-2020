@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using GeneralConcepts;
+using GeneralConcepts.common;
 
 namespace GeneralConcepts.Generics
 {
@@ -25,7 +26,7 @@ namespace GeneralConcepts.Generics
 
         public MyGenericArray(int size)
         {
-            array = new T[size + 1];
+            array = new T[size];
         }
         public T getItem(int index)
         {
@@ -42,8 +43,12 @@ namespace GeneralConcepts.Generics
         public static void Test()
         {
 
+            var car = new Car() {OwnerName = "autito",OwnerAge = 11 };
+
+            car.SayHi();
+
             //declaring an int array
-            MyGenericArray<int> intArray = new MyGenericArray<int>(5);
+            var intArray = new MyGenericArray<int>(5);
 
             //setting values
             for (int c = 0; c < 5; c++)
@@ -54,7 +59,7 @@ namespace GeneralConcepts.Generics
             //retrieving the values
             for (int c = 0; c < 5; c++)
             {
-                Console.Write(intArray.getItem(c) + " ");
+                Console.WriteLine(intArray.getItem(c));
             }
 
             Console.WriteLine();

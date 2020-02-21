@@ -32,13 +32,16 @@ namespace GeneralConcepts.Linq
 
             var testDicionary = new Dictionary<int, Employee>();
 
-            testDicionary.Add(1, new Developer() { Name = "Mara", Id = 1 });
+            testDicionary.Add(13, new Developer() { Name = "Mara", Id = 13 });
 
-            testDicionary[2] = new Developer() { Name = "Pepa", Id = 2 };
+            testDicionary[22] = new Developer() { Name = "Pepa", Id = 22 };
+            testDicionary[55] = new Developer { Name = "yo", Id = 55 };
 
-            var boolExist = testDicionary.ContainsKey(2);
+            var boolExist = testDicionary.ContainsKey(22);
 
             var boolNotExist = testDicionary.ContainsKey(3);
+
+            var yo = testDicionary[55];
 
             //Linq
             var devsToWork = PopulateDevelopers();
@@ -47,6 +50,7 @@ namespace GeneralConcepts.Linq
 
             //Filtering 
             var lessThan30 = devsToWork.Where(e => e.Age < 30); //&& e.something == 2
+            var containsA = devsToWork.Where(e => e.Name.Contains("a"));
 
             var lessThan30_2 = from element in devsToWork
                              where element.Age < 30
@@ -55,7 +59,7 @@ namespace GeneralConcepts.Linq
             //First
             var firstNameD = devsToWork.FirstOrDefault(e => e.Name.StartsWith("D"))?? new Developer();
             var firstNameW = devsToWork.FirstOrDefault(e => e.Name.StartsWith("W")) ?? new Developer();
-
+            var firstNameD2 = devsToWork.Single(e => e.Id == 2);
             //Ordering
             var orderedlistByIdAsc = devsToWork.OrderBy(e => e.Id).ThenByDescending(e => e.Name);
 
@@ -99,6 +103,9 @@ namespace GeneralConcepts.Linq
                                          type = element.Age < 30 ? CarType.Ferrary : CarType.Beetle
                                      };
 
+            var anonymous = new { Color = "ble", Shape = "Square" };
+            var color = anonymous.Color;
+            
             // anonymous class 
             //Projection Selecting 
             var carProjectionAnonymous = devsToWork

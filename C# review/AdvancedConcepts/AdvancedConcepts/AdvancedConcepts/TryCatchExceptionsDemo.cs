@@ -8,6 +8,21 @@ namespace AdvancedConcepts
     {
         public static void Test()
         {
+
+            try
+            {
+                SomeMethod();
+            }
+            catch(MyException ex)
+            {
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
             int x = 0;
             try
             {
@@ -50,7 +65,16 @@ namespace AdvancedConcepts
                 throw ex;
             }
         }
+
+        public static void SomeMethod()
+        {
+            int i = 10;
+            /***********do stuff here**/
+            throw new InvalidOperationException();
+        }
     }
+
+   
 
     public enum ErroType
     {

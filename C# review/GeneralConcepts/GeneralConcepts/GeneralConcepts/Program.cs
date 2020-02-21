@@ -7,10 +7,10 @@ namespace GeneralConcepts
         static void Main(string[] args)
         {
             //generics demo
-            GeneralConcepts.Generics.Tester.Test();
+            //GeneralConcepts.Generics.Tester.Test();
 
             //Delegates and lambdas demo
-            GeneralConcepts.DelegatesAndLambdas.Tester.Test();
+            //GeneralConcepts.DelegatesAndLambdas.Tester.Test();
 
             //Linq demo
             GeneralConcepts.Linq.Tester.Test();

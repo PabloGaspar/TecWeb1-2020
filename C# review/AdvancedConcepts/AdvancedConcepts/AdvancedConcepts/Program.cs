@@ -6,9 +6,9 @@ namespace AdvancedConcepts
     {
         static void Main(string[] args)
         {
-            TaskDemo.Test();
-            TryCatchExceptionsDemo.Test();
-            ReflectionDemo.Test();
+            //TaskDemo.Test();
+            //TryCatchExceptionsDemo.Test();
+            //ReflectionDemo.Test();
             ReflectionDemo.TestAttributes();
         }
     }
