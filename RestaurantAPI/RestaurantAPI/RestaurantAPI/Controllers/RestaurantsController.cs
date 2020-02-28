@@ -19,25 +19,18 @@ namespace RestaurantAPI.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<RestaurantModel> GetReastuarants()
+        public ActionResult<IEnumerable<RestaurantModel>> GetReastuarants()
         {
             //IRestauranServe service = new RestaurantService();
 
-            return service.GetRestaurants();
+            return Ok(service.GetRestaurants());
             
         }
 
         [HttpGet("{id:int}")]
-        public string GetRestaurant(int id)
+        public ActionResult<RestaurantModel> GetRestaurant(int id)
         {
-            if (id == 1)
-            {
-                return "panchita";
-            }
-            else
-            {
-                return "kingdom";
-            }
+           return Ok(service.GetRestaurant(id));
         }
     }
 }
