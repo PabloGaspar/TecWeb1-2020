@@ -1,0 +1,67 @@
+{
+	"info": {
+		"_postman_id": "f7eb8d50-5ba0-4273-8119-0df188bee12e",
+		"name": "RestaurantAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetRestaurants",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/Restaurants?OrderBy=name",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"Restaurants"
+					],
+					"query": [
+						{
+							"key": "OrderBy",
+							"value": "name"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetRestaurant",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateRestaurant",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteRestaurant",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

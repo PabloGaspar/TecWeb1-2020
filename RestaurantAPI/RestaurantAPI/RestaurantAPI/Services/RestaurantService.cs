@@ -35,17 +35,31 @@ namespace RestaurantAPI.Services
 
         public RestaurantModel CreateRestaurant(RestaurantModel newRestaurant)
         {
-            throw new NotImplementedException();
+            var newId = restaurants.OrderByDescending(r => r.Id).First().Id + 1;
+            newRestaurant.Id = newId;
+            restaurants.Add(newRestaurant);
+            return newRestaurant;
         }
 
         public bool DeleteRestaurant(int id)
         {
-            throw new NotImplementedException();
+            var restaurantDelete = GetRestaurant(id);
+            restaurants.Remove(restaurantDelete);
+            return true;
         }
 
         public RestaurantModel GetRestaurant(int id)
         {
-            return restaurants.FirstOrDefault( r => r.Id == id);
+            var resturant= restaurants.FirstOrDefault(r => r.Id == id);
+            if (resturant==null)
+            {
+                throw new NotFoundException($"the id :{id} not exist");
+            }
+            else
+            {
+                return resturant;
+            }
+            
         }
 
         public IEnumerable<RestaurantModel> GetRestaurants(string orderBy)
@@ -70,9 +84,14 @@ namespace RestaurantAPI.Services
             }
         }
 
-        public bool UpdateRestaurant(RestaurantModel restaurant)
+        public bool UpdateRestaurant(int id,RestaurantModel restaurant)
         {
-            throw new NotImplementedException();
+            var res= GetRestaurant(id);
+            res.Name = restaurant.Name??res.Name;
+            res.Phone = restaurant.Phone??res.Phone;
+            res.Address = restaurant.Address??res.Address;
+            res.Fundation = restaurant.Fundation??res.Fundation;
+            return true;
         }
     }
 }

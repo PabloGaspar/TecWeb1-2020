@@ -11,7 +11,7 @@ namespace RestaurantAPI.Services
         RestaurantModel GetRestaurant(int id);
         IEnumerable<RestaurantModel> GetRestaurants(string orderBy = "id");
         RestaurantModel CreateRestaurant(RestaurantModel newRestaurant);
-        bool UpdateRestaurant(RestaurantModel restaurant);
+        bool UpdateRestaurant(int id,RestaurantModel restaurant);
         bool DeleteRestaurant(int id);
     }
 }

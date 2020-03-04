@@ -10,7 +10,7 @@ namespace RestaurantAPI.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
-        public int Phone { get; set; }
-        public DateTime Fundation { get; set; }
+        public int? Phone { get; set; }
+        public DateTime? Fundation { get; set; }
     }
 }
