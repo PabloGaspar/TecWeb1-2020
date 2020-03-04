@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using RestaurantAPI.Exceptions;
 using RestaurantAPI.Models;
 
 namespace RestaurantAPI.Services
@@ -9,6 +10,7 @@ namespace RestaurantAPI.Services
     public class RestaurantService : IRestaurantService
     {
         private List<RestaurantModel> restaurants = new List<RestaurantModel>();
+        private List<string> allowedSortValues = new List<string>() { "id", "name", "address"};
 
         public RestaurantService()
         {
@@ -46,9 +48,26 @@ namespace RestaurantAPI.Services
             return restaurants.FirstOrDefault( r => r.Id == id);
         }
 
-        public IEnumerable<RestaurantModel> GetRestaurants()
+        public IEnumerable<RestaurantModel> GetRestaurants(string orderBy)
         {
-            return restaurants;
+            if (!allowedSortValues.Contains(orderBy.ToLower()))
+            {
+                throw new BadOperationRequest( $"bad sort value: { orderBy } allowed values are: { String.Join(",", allowedSortValues)}");
+                
+                // throw new BadOperationRequest() { Message = $"bad sort value: {orderBy} allowed values are: {String.Join(",", allowedSortValues)}"};
+            }
+
+            switch (orderBy)
+            {
+                case "id":
+                    return restaurants.OrderBy(r => r.Id);
+                case "name":
+                    return restaurants.OrderBy(r => r.Name);
+                case "address":
+                    return restaurants.OrderBy(r => r.Address);
+                default:
+                    return restaurants;
+            }
         }
 
         public bool UpdateRestaurant(RestaurantModel restaurant)

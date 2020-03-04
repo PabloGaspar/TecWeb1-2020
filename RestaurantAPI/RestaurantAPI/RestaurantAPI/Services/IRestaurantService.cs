@@ -9,7 +9,7 @@ namespace RestaurantAPI.Services
     public interface IRestaurantService
     {
         RestaurantModel GetRestaurant(int id);
-        IEnumerable<RestaurantModel> GetRestaurants();
+        IEnumerable<RestaurantModel> GetRestaurants(string orderBy = "id");
         RestaurantModel CreateRestaurant(RestaurantModel newRestaurant);
         bool UpdateRestaurant(RestaurantModel restaurant);
         bool DeleteRestaurant(int id);

@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RestaurantAPI.Exceptions;
 using RestaurantAPI.Models;
 using RestaurantAPI.Services;
 
@@ -18,12 +20,24 @@ namespace RestaurantAPI.Controllers
             this.service = service;
         }
 
-        [HttpGet]
-        public ActionResult<IEnumerable<RestaurantModel>> GetReastuarants()
+        [HttpGet()]
+        public ActionResult<IEnumerable<RestaurantModel>> GetReastuarants(string orderBy = "id")
         {
             //IRestauranServe service = new RestaurantService();
+            try
+            {
+                return Ok(service.GetRestaurants(orderBy));
+            }
+            catch(BadOperationRequest ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
 
-            return Ok(service.GetRestaurants());
+            
             
         }
 
