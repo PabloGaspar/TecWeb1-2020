@@ -2,18 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using LibraryAPI.Data.Repository;
-using LibraryAPI.Services;
+using AutoMapper;
+using Library.Data;
+using Library.Data.Repository;
+using Library.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace LibraryAPI
+namespace Library
 {
     public class Startup
     {
@@ -30,7 +33,17 @@ namespace LibraryAPI
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddTransient<IAuthorsService, AuthorsService>();
             services.AddTransient<IBooksService, BooksService>();
-            services.AddSingleton<IAuthorsRepository, AuthorsRepository>();
+            services.AddTransient<ILibraryRepository, LibraryRepository>();
+            //entity framework config
+            services.AddEntityFrameworkSqlServer();
+            services.AddDbContext<LibraryDbContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("LibraryApiDatabase")
+                    )
+            );
+
+            //automapper configuration
+            services.AddAutoMapper(typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

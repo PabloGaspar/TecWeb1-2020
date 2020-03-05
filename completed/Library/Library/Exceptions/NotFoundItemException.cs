@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LibraryAPI.Exceptions
+namespace Library.Exceptions
 {
-    public class InvalidOperationException: Exception
+    public class NotFoundItemException : Exception
     {
-        public InvalidOperationException(string message)
+        public NotFoundItemException(string message)
             :base(message)
         {
-                
+
         }
     }
 }
