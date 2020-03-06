@@ -66,6 +66,11 @@ namespace RestaurantAPI.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                
                 var newRestaurant = service.CreateRestaurant(restaurant);
                 return Created($"/api/Restaurants/{newRestaurant.Id}", newRestaurant);
             }
@@ -94,11 +99,21 @@ namespace RestaurantAPI.Controllers
             }
         }
         [HttpPut("{id:int}")]
-        public ActionResult<bool> UpdateRestaurant(int id, RestaurantModel restaurant)
+        public ActionResult<bool> UpdateRestaurant(int id, [FromBody] RestaurantModel restaurant)
         {
             try
             {
-     
+                if (!ModelState.IsValid)
+                {
+                    foreach (var state in ModelState)
+                    {
+                        if (state.Key == nameof(restaurant.Address) && state.Value.Errors.Count > 0)
+                        {
+                            return BadRequest(state.Value.Errors);
+                        }
+                    }
+                }
+
                 return Ok(service.UpdateRestaurant(id,restaurant));
             }
             catch (NotFoundException ex)

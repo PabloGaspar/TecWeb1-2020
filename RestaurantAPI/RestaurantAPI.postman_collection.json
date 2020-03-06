@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "f7eb8d50-5ba0-4273-8119-0df188bee12e",
+		"_postman_id": "c05d65cb-e9b0-44a8-ac4a-95e6a9aecfad",
 		"name": "RestaurantAPI",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -35,7 +35,15 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": ""
+					"raw": "{{host}}/api/Restaurants/3",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"Restaurants",
+						"3"
+					]
 				}
 			},
 			"response": []
@@ -43,10 +51,33 @@
 		{
 			"name": "CreateRestaurant",
 			"request": {
-				"method": "GET",
-				"header": [],
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n      \r\n\r\n        \"name\": \"Salta\",\r\n        \"address\": \"sssssossssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss\",\r\n        \r\n        \"phone\": 44499777,\r\n        \"fundation\": \"2002-04-22\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": ""
+					"raw": "{{host}}/api/Restaurants",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"Restaurants"
+					]
 				}
 			},
 			"response": []
@@ -58,6 +89,41 @@
 				"header": [],
 				"url": {
 					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateRestaurant",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 3,\r\n   \r\n    \"address\": \"pradoddddddddddddddddddd\",\r\n    \"phone\": 4449978\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/Restaurants/3",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"Restaurants",
+						"3"
+					]
 				}
 			},
 			"response": []
