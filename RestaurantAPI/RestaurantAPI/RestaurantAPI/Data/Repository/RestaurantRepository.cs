@@ -41,7 +41,9 @@ namespace RestaurantAPI.Data.Repository
 
         public bool DeleteRestaurant(int id)
         {
-            throw new NotImplementedException();
+            var restaurantDelete = GetRestaurant(id);
+            restaurants.Remove(restaurantDelete);
+            return true;
         }
 
         public RestaurantEntity GetRestaurant(int id, bool showDishes = false)
@@ -66,7 +68,12 @@ namespace RestaurantAPI.Data.Repository
 
         public bool UpdateRestaurant(RestaurantEntity restaurant)
         {
-            throw new NotImplementedException();
+            var res = GetRestaurant(restaurant.Id);
+            res.Name = restaurant.Name ?? res.Name;
+            res.Phone = restaurant.Phone ?? res.Phone;
+            res.Address = restaurant.Address ?? res.Address;
+            res.Fundation = restaurant.Fundation ?? res.Fundation;
+            return true;
         }
     }
 }

@@ -32,8 +32,8 @@ namespace RestaurantAPI.Services
 
         public bool DeleteRestaurant(int id)
         {
-            var restaurantDelete = GetRestaurant(id);
-            restaurants.Remove(restaurantDelete);
+            var restaurantToDelete = GetRestaurant(id);
+            repository.DeleteRestaurant(id);
             return true;
         }
 
@@ -56,8 +56,6 @@ namespace RestaurantAPI.Services
             if (!allowedSortValues.Contains(orderBy.ToLower()))
             {
                 throw new BadOperationRequest( $"bad sort value: { orderBy } allowed values are: { String.Join(",", allowedSortValues)}");
-                
-                // throw new BadOperationRequest() { Message = $"bad sort value: {orderBy} allowed values are: {String.Join(",", allowedSortValues)}"};
             }
             var restaurantEntities = repository.GetRestaurants(orderBy);
             return mapper.Map<IEnumerable<RestaurantModel>>(restaurantEntities);
@@ -65,11 +63,10 @@ namespace RestaurantAPI.Services
 
         public bool UpdateRestaurant(int id,RestaurantModel restaurant)
         {
-            var res= GetRestaurant(id);
-            res.Name = restaurant.Name??res.Name;
-            res.Phone = restaurant.Phone??res.Phone;
-            res.Address = restaurant.Address??res.Address;
-            res.Fundation = restaurant.Fundation??res.Fundation;
+            var restaurantToUpdate = GetRestaurant(id);
+            restaurant.Id = id;
+
+            repository.UpdateRestaurant(mapper.Map<RestaurantEntity>(restaurant));
             return true;
         }
     }
