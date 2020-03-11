@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using RestaurantAPI.Data.Repository;
 using RestaurantAPI.Services;
 
 namespace RestaurantAPI
@@ -27,7 +28,9 @@ namespace RestaurantAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IRestaurantService, RestaurantService>();
+            services.AddTransient<IRestaurantService, RestaurantService>();
+            services.AddTransient<IDishService, DishService>();
+            services.AddSingleton<IRestaurantRepository, RestaurantRepository>();
             //automapper configuration
             services.AddAutoMapper(typeof(Startup));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

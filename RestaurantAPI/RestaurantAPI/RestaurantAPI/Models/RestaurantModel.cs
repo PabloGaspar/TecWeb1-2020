@@ -17,5 +17,6 @@ namespace RestaurantAPI.Models
         [Range(1,9999999999999)]
         public int? Phone { get; set; }
         public DateTime? Fundation { get; set; }
+        public IEnumerable<DishModel> Dishes { get; set; }
     }
 }

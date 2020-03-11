@@ -63,7 +63,7 @@ namespace RestaurantAPI.Services
 
         public bool UpdateRestaurant(int id,RestaurantModel restaurant)
         {
-            var restaurantToUpdate = GetRestaurant(id);
+            GetRestaurant(id);
             restaurant.Id = id;
 
             repository.UpdateRestaurant(mapper.Map<RestaurantEntity>(restaurant));

@@ -14,6 +14,8 @@ namespace RestaurantAPI.Data
         {
             this.CreateMap<RestaurantEntity, RestaurantModel>()
                 .ReverseMap();
+            this.CreateMap<DishEntity, DishModel>()
+                .ReverseMap();
         }
     }
 }

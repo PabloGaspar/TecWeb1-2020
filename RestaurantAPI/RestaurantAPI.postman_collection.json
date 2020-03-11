@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "c05d65cb-e9b0-44a8-ac4a-95e6a9aecfad",
+		"_postman_id": "c798715a-60bd-465e-bff9-449270c549e3",
 		"name": "RestaurantAPI",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -124,6 +124,61 @@
 						"Restaurants",
 						"3"
 					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetDish",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateDish",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetDishes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteRestaurant",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateDish",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
 				}
 			},
 			"response": []
