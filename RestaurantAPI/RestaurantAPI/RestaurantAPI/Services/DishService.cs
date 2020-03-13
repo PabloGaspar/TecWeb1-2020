@@ -41,10 +41,10 @@ namespace RestaurantAPI.Services
         {
             ValidateRestaurant(RestaurantId);
             var dish = repository.GetDish(id);
-            if (dish == null || dish.RestaurantId != RestaurantId)
+            /*if (dish == null || dish.RestaurantId != RestaurantId)
             {
                 throw new NotFoundException($"the id :{id} not exist for dish");
-            }
+            }*/
            
             return mapper.Map<DishModel>(dish);
         }

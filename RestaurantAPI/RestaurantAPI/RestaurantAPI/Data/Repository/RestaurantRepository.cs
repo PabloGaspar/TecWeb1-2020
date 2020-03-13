@@ -36,7 +36,7 @@ namespace RestaurantAPI.Data.Repository
                 Name = "panchicono",
                 Price = 25.5m,
                 Description = "un cono",
-                RestaurantId = 1
+                //RestaurantId = 1
 
             });
             dishes.Add(new DishEntity()
@@ -45,7 +45,7 @@ namespace RestaurantAPI.Data.Repository
                 Name = "chipollo",
                 Price = 40.3m,
                 Description = "un chipollo",
-                RestaurantId = 1
+               // RestaurantId = 1
 
             });
 
@@ -55,7 +55,7 @@ namespace RestaurantAPI.Data.Repository
                 Name = "queen Menu",
                 Price = 35.7m,
                 Description = "queen",
-                RestaurantId = 2
+                //RestaurantId = 2
 
             });
 
@@ -65,7 +65,7 @@ namespace RestaurantAPI.Data.Repository
                 Name = "king Menu",
                 Price = 45.7m,
                 Description = "king",
-                RestaurantId = 2
+               // RestaurantId = 2
 
             });
         }
@@ -106,7 +106,8 @@ namespace RestaurantAPI.Data.Repository
 
         public IEnumerable<DishEntity> GetDishes(int restaurantId)
         {
-            return dishes.Where(d => d.RestaurantId == restaurantId);
+            //return dishes.Where(d => d.RestaurantId == restaurantId);
+            return null;
         }
 
         public RestaurantEntity GetRestaurant(int id, bool showDishes = false)
