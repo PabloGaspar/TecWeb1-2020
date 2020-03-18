@@ -10,8 +10,8 @@ namespace RestaurantAPI.Data.Repository
     {
         //restaurants
         RestaurantEntity GetRestaurant(int id, bool showDishes = false);
-        IEnumerable<RestaurantEntity> GetRestaurants(string orderBy, bool showDishes = false);
-        RestaurantEntity CreateRestaurant(RestaurantEntity newRestaurant);
+        Task<IEnumerable<RestaurantEntity>> GetRestaurantsAsync(string orderBy, bool showDishes = false);
+        void CreateRestaurant(RestaurantEntity newRestaurant);
         bool UpdateRestaurant(RestaurantEntity restaurant);
         bool DeleteRestaurant(int id);
 
@@ -21,5 +21,9 @@ namespace RestaurantAPI.Data.Repository
         DishEntity CreateDish(DishEntity newDish);
         bool UpdateDish(DishEntity Dish);
         bool DeleteDish(int id);
+
+
+        //save changes
+        Task<bool> SaveChangesAsync();
     }
 }

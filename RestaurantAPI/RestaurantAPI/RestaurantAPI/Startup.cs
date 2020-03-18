@@ -32,7 +32,7 @@ namespace RestaurantAPI
         {
             services.AddTransient<IRestaurantService, RestaurantService>();
             services.AddTransient<IDishService, DishService>();
-            services.AddSingleton<IRestaurantRepository, RestaurantRepository>();
+            services.AddTransient<IRestaurantRepository, RestaurantRepository>();
 
             //Entity Framework Core config
             services.AddEntityFrameworkSqlServer();

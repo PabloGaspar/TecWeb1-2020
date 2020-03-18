@@ -1,4 +1,5 @@
-﻿using RestaurantAPI.Data.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using RestaurantAPI.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,13 @@ namespace RestaurantAPI.Data.Repository
 {
     public class RestaurantRepository : IRestaurantRepository
     {
+        private RestaurantDbContext dbContext;
+        
+        public RestaurantRepository(RestaurantDbContext dbContext)
+        {
+            this.dbContext = dbContext;
+        }
+        
         private List<RestaurantEntity> restaurants = new List<RestaurantEntity>();
         private List<DishEntity> dishes = new List<DishEntity>();
 
@@ -78,12 +86,9 @@ namespace RestaurantAPI.Data.Repository
             return newDish;
         }
 
-        public RestaurantEntity CreateRestaurant(RestaurantEntity newRestaurant)
+        public void CreateRestaurant(RestaurantEntity newRestaurant)
         {
-            var newId = restaurants.OrderByDescending(r => r.Id).First().Id + 1;
-            newRestaurant.Id = newId;
-            restaurants.Add(newRestaurant);
-            return newRestaurant;
+            dbContext.Restaurants.Add(newRestaurant);
         }
 
         public bool DeleteDish(int id)
@@ -112,22 +117,44 @@ namespace RestaurantAPI.Data.Repository
 
         public RestaurantEntity GetRestaurant(int id, bool showDishes = false)
         {
-            return restaurants.FirstOrDefault(r => r.Id == id);
+            return  dbContext.Restaurants.FirstOrDefault(r => r.Id == id);
         }
 
-        public IEnumerable<RestaurantEntity> GetRestaurants(string orderBy, bool showDishes = false)
+        public async Task<IEnumerable<RestaurantEntity>> GetRestaurantsAsync(string orderBy, bool showDishes = false)
         {
+            IQueryable<RestaurantEntity> query = dbContext.Restaurants;
+
+            var restaurant = query.FirstOrDefault();
+
             switch (orderBy)
             {
                 case "id":
-                    return restaurants.OrderBy(r => r.Id);
+                    query = query.OrderBy(r => r.Id);
+                    break;
                 case "name":
-                    return restaurants.OrderBy(r => r.Name);
+                    query = query.OrderBy(r => r.Name);
+                    break;
                 case "address":
-                    return restaurants.OrderBy(r => r.Address);
+                    query = query.OrderBy(r => r.Address);
+                    break;
                 default:
-                    return restaurants;
+                    break;
             }
+
+            if(showDishes)
+            {
+                query = query.Include(r => r.Dishes);
+            }
+
+            query = query.AsNoTracking();
+
+            return await query.ToArrayAsync();
+        }
+
+        public async Task<bool> SaveChangesAsync()
+        {
+            var res = await dbContext.SaveChangesAsync();
+            return res > 0;
         }
 
         public bool UpdateDish(DishEntity dish)
@@ -149,5 +176,7 @@ namespace RestaurantAPI.Data.Repository
             res.Fundation = restaurant.Fundation ?? res.Fundation;
             return true;
         }
+
+     
     }
 }

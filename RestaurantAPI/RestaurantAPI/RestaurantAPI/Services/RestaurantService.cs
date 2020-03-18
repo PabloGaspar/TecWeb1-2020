@@ -23,11 +23,18 @@ namespace RestaurantAPI.Services
            this.mapper = mapper;
         }
 
-        public RestaurantModel CreateRestaurant(RestaurantModel newRestaurant)
+        public async Task<RestaurantModel> CreateRestaurantAsync(RestaurantModel newRestaurant)
         {
             var restaurantEntity = mapper.Map<RestaurantEntity>(newRestaurant);
-            var newRestaurantEntity = repository.CreateRestaurant(restaurantEntity);
-            return mapper.Map<RestaurantModel>(newRestaurantEntity);
+            repository.CreateRestaurant(restaurantEntity);
+            var res = await repository.SaveChangesAsync();
+            if (res)
+            {
+                return mapper.Map<RestaurantModel>(restaurantEntity);
+            }
+
+            throw new Exception("Database Exception");
+           
         }
 
         public bool DeleteRestaurant(int id)
@@ -51,13 +58,13 @@ namespace RestaurantAPI.Services
             
         }
 
-        public IEnumerable<RestaurantModel> GetRestaurants(string orderBy)
+        public async Task<IEnumerable<RestaurantModel>> GetRestaurantsAsync(string orderBy, bool showDishes)
         {
             if (!allowedSortValues.Contains(orderBy.ToLower()))
             {
                 throw new BadOperationRequest( $"bad sort value: { orderBy } allowed values are: { String.Join(",", allowedSortValues)}");
             }
-            var restaurantEntities = repository.GetRestaurants(orderBy);
+            var restaurantEntities = await repository.GetRestaurantsAsync(orderBy, showDishes);
             return mapper.Map<IEnumerable<RestaurantModel>>(restaurantEntities);
         }
 

@@ -22,12 +22,12 @@ namespace RestaurantAPI.Controllers
         }
 
         [HttpGet()]
-        public ActionResult<IEnumerable<RestaurantModel>> GetReastuarants(string orderBy = "id")
+        public async Task<ActionResult<IEnumerable<RestaurantModel>>> GetReastuarants(string orderBy = "id", bool showDishes = false)
         {
             //IRestauranServe service = new RestaurantService();
             try
             {
-                return Ok(service.GetRestaurants(orderBy));
+                return Ok(await service.GetRestaurantsAsync(orderBy, showDishes));
             }
             catch(BadOperationRequest ex) 
             {
@@ -37,9 +37,6 @@ namespace RestaurantAPI.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
-
-            
-            
         }
 
 
@@ -62,7 +59,7 @@ namespace RestaurantAPI.Controllers
         }
 
         [HttpPost]
-        public ActionResult<RestaurantModel> CreateRestaurant([FromBody] RestaurantModel restaurant)
+        public async Task<ActionResult<RestaurantModel>> CreateRestaurant([FromBody] RestaurantModel restaurant)
         {
             try
             {
@@ -71,7 +68,7 @@ namespace RestaurantAPI.Controllers
                     return BadRequest(ModelState);
                 }
                 
-                var newRestaurant = service.CreateRestaurant(restaurant);
+                var newRestaurant = await service.CreateRestaurantAsync(restaurant);
                 return Created($"/api/Restaurants/{newRestaurant.Id}", newRestaurant);
             }
             catch (NotFoundException ex)
@@ -84,6 +81,7 @@ namespace RestaurantAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message); ;
             }
         }
+
         [HttpDelete("{id:int}")]
         public ActionResult<bool> DeleteRestaurant(int id)
         {
