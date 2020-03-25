@@ -19,11 +19,11 @@ namespace RestaurantAPI.Controllers
             this.service = service;
         }
         [HttpDelete("{id:int}")]
-        public ActionResult<bool> DeleteDish(int restaurantId, int id)
+        public async Task<IActionResult> DeleteDishAsync(int restaurantId, int id) // you can return an IActionResult
         {
             try
             {
-                return Ok(service.DeleteDish(restaurantId, id));
+                return Ok(await service.DeleteDishAsync(restaurantId, id));
             }
             catch (NotFoundException ex)
             {
@@ -37,11 +37,11 @@ namespace RestaurantAPI.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public ActionResult<bool> UpdateDish(int restaurantId, int id, [FromBody]DishModel dish)
+        public async Task<ActionResult<bool>> UpdateDishAsync(int restaurantId, int id, [FromBody]DishModel dish)
         {
             try
             {
-                return Ok(service.UpdateDish(restaurantId, id, dish));
+                return Ok(await service.UpdateDishAsync(restaurantId, id, dish));
             }
             catch (NotFoundException ex)
             {
@@ -54,12 +54,13 @@ namespace RestaurantAPI.Controllers
             }
 
         }
+
         [HttpGet("{id:int}")]
-        public ActionResult<DishModel> GetDish(int restaurantId, int id)
+        public async Task<ActionResult<DishModel>> GetDishAsync(int restaurantId, int id)
         {
             try
             {
-                return Ok(service.GetDish(restaurantId, id));
+                return Ok(await service.GetDishAsync(restaurantId, id));
             }
             catch (NotFoundException ex)
             {
@@ -73,11 +74,11 @@ namespace RestaurantAPI.Controllers
         }
 
         [HttpPost]
-        public ActionResult<DishModel> CreateDish(int restaurantId, [FromBody]DishModel dish)
+        public async Task<ActionResult<DishModel>> CreateDishAsync(int restaurantId, [FromBody]DishModel dish)
         {
             try
             {
-                var newDish = service.CreateDish(restaurantId, dish);
+                var newDish = await service.CreateDishAsync(restaurantId, dish);
                 return Created($"api/restaurants/{restaurantId}/dishes/{newDish.Id}", newDish);
 
             }
@@ -89,11 +90,11 @@ namespace RestaurantAPI.Controllers
         }
 
         [HttpGet]
-        public ActionResult<DishModel> GetDishes(int restaurantId)
+        public async Task<ActionResult<DishModel>> GetDishesAsync(int restaurantId)
         {
             try
             {
-                return Ok(service.GetDishes(restaurantId));
+                return Ok(await service.GetDishesAsync(restaurantId));
 
             }
             catch (Exception)

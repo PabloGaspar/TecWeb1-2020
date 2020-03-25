@@ -9,18 +9,18 @@ namespace RestaurantAPI.Data.Repository
     public interface IRestaurantRepository
     {
         //restaurants
-        RestaurantEntity GetRestaurant(int id, bool showDishes = false);
+        Task<RestaurantEntity> GetRestaurantAsync(int id, bool showDishes = false);
         Task<IEnumerable<RestaurantEntity>> GetRestaurantsAsync(string orderBy, bool showDishes = false);
         void CreateRestaurant(RestaurantEntity newRestaurant);
         bool UpdateRestaurant(RestaurantEntity restaurant);
-        bool DeleteRestaurant(int id);
+        Task<bool> DeleteRestaurant(int id);
 
         //dishes
-        DishEntity GetDish(int id);
-        IEnumerable<DishEntity> GetDishes(int restaurantId);
-        DishEntity CreateDish(DishEntity newDish);
+        Task<DishEntity> GetDishAsync(int id);
+        Task<IEnumerable<DishEntity>> GetDishesAsync(int restaurantId);
+        void CreateDish(DishEntity newDish);
         bool UpdateDish(DishEntity Dish);
-        bool DeleteDish(int id);
+        Task<bool> DeleteDishAsync(int id);
 
 
         //save changes

@@ -8,10 +8,10 @@ namespace RestaurantAPI.Services
 {
     public interface IRestaurantService
     {
-        RestaurantModel GetRestaurant(int id);
+        Task<RestaurantModel> GetRestaurantAsync(int id);
         Task<IEnumerable<RestaurantModel>> GetRestaurantsAsync(string orderBy = "id", bool showDishes = false);
         Task<RestaurantModel> CreateRestaurantAsync(RestaurantModel newRestaurant);
-        bool UpdateRestaurant(int id,RestaurantModel restaurant);
-        bool DeleteRestaurant(int id);
+        Task<bool> UpdateRestaurantAsync(int id,RestaurantModel restaurant);
+        Task<bool> DeleteRestaurantAsync(int id);
     }
 }

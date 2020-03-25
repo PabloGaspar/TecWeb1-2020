@@ -37,16 +37,22 @@ namespace RestaurantAPI.Services
            
         }
 
-        public bool DeleteRestaurant(int id)
+        public async Task<bool> DeleteRestaurantAsync(int id)
         {
-            var restaurantToDelete = GetRestaurant(id);
-            repository.DeleteRestaurant(id);
-            return true;
+            var restaurantToDelete = await GetRestaurantAsync(id);
+            await repository.DeleteRestaurant(id);
+            var res = await repository.SaveChangesAsync();
+            if (res)
+            {
+                return true;
+            }
+
+            throw new Exception("Database Exception");
         }
 
-        public RestaurantModel GetRestaurant(int id)
+        public async Task<RestaurantModel> GetRestaurantAsync(int id)
         {
-            var resturantEntity = repository.GetRestaurant(id);
+            var resturantEntity = await repository.GetRestaurantAsync(id);
             if (resturantEntity == null)
             {
                 throw new NotFoundException($"the id :{id} not exist");
@@ -55,7 +61,6 @@ namespace RestaurantAPI.Services
             {
                 return mapper.Map<RestaurantModel>(resturantEntity); ;
             }
-            
         }
 
         public async Task<IEnumerable<RestaurantModel>> GetRestaurantsAsync(string orderBy, bool showDishes)
@@ -68,13 +73,19 @@ namespace RestaurantAPI.Services
             return mapper.Map<IEnumerable<RestaurantModel>>(restaurantEntities);
         }
 
-        public bool UpdateRestaurant(int id,RestaurantModel restaurant)
+        public async Task<bool> UpdateRestaurantAsync(int id,RestaurantModel restaurant)
         {
-            GetRestaurant(id);
+            await GetRestaurantAsync(id);
             restaurant.Id = id;
 
             repository.UpdateRestaurant(mapper.Map<RestaurantEntity>(restaurant));
-            return true;
+            var res = await repository.SaveChangesAsync();
+            if (res)
+            {
+                return true;
+            }
+
+            throw new Exception("Database Exception");
         }
     }
 }

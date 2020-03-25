@@ -20,53 +20,78 @@ namespace RestaurantAPI.Services
             this.repository = repository;
             this.mapper = mapper;
         }
-        public DishModel CreateDish(int RestaurantId, DishModel newDish)
+
+        public async Task<DishModel> CreateDishAsync(int RestaurantId, DishModel newDish)
         {
-            ValidateRestaurant(RestaurantId);
-            var dishEntity = repository.CreateDish(mapper.Map<DishEntity>(newDish));
-            return mapper.Map<DishModel>(dishEntity);
+            await ValidateRestaurantAsync(RestaurantId);
+            newDish.RestaurantId = RestaurantId;
+            var dishEntity = mapper.Map<DishEntity>(newDish);
+            
+            repository.CreateDish(dishEntity);
+
+            var res = await repository.SaveChangesAsync();
+            if (res)
+            {
+                return mapper.Map<DishModel>(dishEntity); 
+            }
+
+            throw new Exception("Database Exception");
         }
 
-        public bool DeleteDish(int restaurantId, int id)
+        public async Task<bool> DeleteDishAsync(int restaurantId, int id)
         {
-            var dish=GetDish(restaurantId,id);
+            var dish = await GetDishAsync(restaurantId,id);
             if(dish==null)
             {
                 throw new NotFoundException($"Dish {id} does not exist");
             }
-            return repository.DeleteDish(id);
+            await repository.DeleteDishAsync(id);
+            var res = await repository.SaveChangesAsync();
+            if (res)
+            {
+                return true;
+            }
+
+            throw new Exception("Database Exception");
         }
 
-        public DishModel GetDish(int RestaurantId, int id)
+        public async Task<DishModel> GetDishAsync(int RestaurantId, int id)
         {
-            ValidateRestaurant(RestaurantId);
-            var dish = repository.GetDish(id);
-            /*if (dish == null || dish.RestaurantId != RestaurantId)
+            await ValidateRestaurantAsync(RestaurantId);
+            var dish = await repository.GetDishAsync(id);
+            if (dish == null || dish.Restaurant.Id != RestaurantId)
             {
                 throw new NotFoundException($"the id :{id} not exist for dish");
-            }*/
+            }
            
             return mapper.Map<DishModel>(dish);
         }
 
-        public IEnumerable<DishModel> GetDishes(int restaurantId)
+        public async Task<IEnumerable<DishModel>> GetDishesAsync(int restaurantId)
         {
-            ValidateRestaurant(restaurantId);
-            return mapper.Map<IEnumerable<DishModel>>(repository.GetDishes(restaurantId));
+            await ValidateRestaurantAsync(restaurantId);
+            return mapper.Map<IEnumerable<DishModel>>(await repository.GetDishesAsync(restaurantId));
         }
 
-        public bool UpdateDish(int restaurantId, int id, DishModel dish)
+        public async Task<bool> UpdateDishAsync(int restaurantId, int id, DishModel dish)
         {
             dish.Id = id;
-            GetDish(restaurantId, id);
-           
-            return repository.UpdateDish(mapper.Map<DishEntity>(dish));
+            await GetDishAsync(restaurantId, id);
 
+            repository.UpdateDish(mapper.Map<DishEntity>(dish));
+
+            var res = await repository.SaveChangesAsync();
+            if (res)
+            {
+                return true;
+            }
+
+            throw new Exception("Database Exception");
         }
 
-        private void ValidateRestaurant(int id)
+        private async Task ValidateRestaurantAsync(int id)
         {
-            var resturantEntity = repository.GetRestaurant(id);
+            var resturantEntity = await repository.GetRestaurantAsync(id);
             if (resturantEntity == null)
             {
                 throw new NotFoundException($"the id :{id} not exist for restaurant");

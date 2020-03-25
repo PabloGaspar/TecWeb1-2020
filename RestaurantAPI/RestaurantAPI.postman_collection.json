@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "c798715a-60bd-465e-bff9-449270c549e3",
+		"_postman_id": "5ebf814f-8454-4e00-ad20-37f2a33718c7",
 		"name": "RestaurantAPI",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -10,6 +10,10 @@
 			"request": {
 				"method": "GET",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "{{host}}/api/Restaurants?OrderBy=name",
 					"host": [
@@ -34,15 +38,19 @@
 			"request": {
 				"method": "GET",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
-					"raw": "{{host}}/api/Restaurants/3",
+					"raw": "{{host}}/api/Restaurants/100222222",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"api",
 						"Restaurants",
-						"3"
+						"100222222"
 					]
 				}
 			},
@@ -62,12 +70,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n      \r\n\r\n        \"name\": \"Salta\",\r\n        \"address\": \"sssssossssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss\",\r\n        \r\n        \"phone\": 44499777,\r\n        \"fundation\": \"2002-04-22\"\r\n    }",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
+					"raw": " {\n  \n    \"name\": \"Kingdom\",\n    \"address\": \"Heroinas\",\n    \"phone\": 444222222,\n    \"fundation\": \"1997-02-17T00:00:00\"\n}"
 				},
 				"url": {
 					"raw": "{{host}}/api/Restaurants",
@@ -85,10 +88,22 @@
 		{
 			"name": "DeleteRestaurant",
 			"request": {
-				"method": "GET",
+				"method": "DELETE",
 				"header": [],
-				"url": {
+				"body": {
+					"mode": "raw",
 					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/api/Restaurants/1002",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"Restaurants",
+						"1002"
+					]
 				}
 			},
 			"response": []
@@ -107,22 +122,17 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": 3,\r\n   \r\n    \"address\": \"pradoddddddddddddddddddd\",\r\n    \"phone\": 4449978\r\n\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
+					"raw": " {\n        \n        \"name\": \"Panchita\",\n        \"address\": \"Heroinas\",\n        \"phone\": 1111111111,\n        \"fundation\": \"1997-02-17T00:00:00\"\n    }"
 				},
 				"url": {
-					"raw": "{{host}}/api/Restaurants/3",
+					"raw": "{{host}}/api/Restaurants/2",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"api",
 						"Restaurants",
-						"3"
+						"2"
 					]
 				}
 			},
@@ -133,8 +143,22 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": {
+				"body": {
+					"mode": "raw",
 					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/api/Restaurants/1/Dishes/3",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"Restaurants",
+						"1",
+						"Dishes",
+						"3"
+					]
 				}
 			},
 			"response": []
@@ -142,10 +166,30 @@
 		{
 			"name": "CreateDish",
 			"request": {
-				"method": "GET",
-				"header": [],
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n\n        \"name\": \"Lechuga con pan\",\n        \"price\": 10.5,\n        \"description\": \"lechuga\",\n         \"restaurantId\": 1\n  \n    }"
+				},
 				"url": {
-					"raw": ""
+					"raw": "{{host}}/api/Restaurants/1/Dishes",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"Restaurants",
+						"1",
+						"Dishes"
+					]
 				}
 			},
 			"response": []
@@ -155,19 +199,46 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": {
+				"body": {
+					"mode": "raw",
 					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/api/Restaurants/1/Dishes",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"Restaurants",
+						"1",
+						"Dishes"
+					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "DeleteRestaurant",
+			"name": "DeleteDish",
 			"request": {
-				"method": "GET",
+				"method": "DELETE",
 				"header": [],
-				"url": {
+				"body": {
+					"mode": "raw",
 					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/api/Restaurants/1/Dishes/3",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"Restaurants",
+						"1",
+						"Dishes",
+						"3"
+					]
 				}
 			},
 			"response": []
@@ -175,14 +246,34 @@
 		{
 			"name": "UpdateDish",
 			"request": {
-				"method": "GET",
-				"header": [],
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Lechuga con mucho pan\",\n    \"price\": 10.5,\n    \"description\": \"lechuga\",\n    \"restaurantId\": 1\n}"
+				},
 				"url": {
-					"raw": ""
+					"raw": "{{host}}/api/Restaurants/1/Dishes/3",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"Restaurants",
+						"1",
+						"Dishes",
+						"3"
+					]
 				}
 			},
 			"response": []
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }

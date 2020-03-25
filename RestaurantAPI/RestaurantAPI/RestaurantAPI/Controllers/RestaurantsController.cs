@@ -41,11 +41,11 @@ namespace RestaurantAPI.Controllers
 
 
         [HttpGet("{id:int}")]
-        public ActionResult<RestaurantModel> GetRestaurant(int id)
+        public async Task<ActionResult<RestaurantModel>> GetRestaurant(int id)
         {
             try
             {
-                return Ok(service.GetRestaurant(id));
+                return Ok(await service.GetRestaurantAsync(id));
             }
             catch(NotFoundException ex)
             {
@@ -83,11 +83,11 @@ namespace RestaurantAPI.Controllers
         }
 
         [HttpDelete("{id:int}")]
-        public ActionResult<bool> DeleteRestaurant(int id)
+        public async Task<ActionResult<bool>> DeleteRestaurantAsync(int id)
         {
             try
             {
-                var res = service.DeleteRestaurant(id);
+                var res = await service.DeleteRestaurantAsync(id);
                 return Ok(res);
             }
             catch (Exception ex)
@@ -97,7 +97,7 @@ namespace RestaurantAPI.Controllers
             }
         }
         [HttpPut("{id:int}")]
-        public ActionResult<bool> UpdateRestaurant(int id, [FromBody] RestaurantModel restaurant)
+        public async Task<ActionResult<bool>> UpdateRestaurant(int id, [FromBody] RestaurantModel restaurant)
         {
             try
             {
@@ -112,7 +112,7 @@ namespace RestaurantAPI.Controllers
                     }
                 }
 
-                return Ok(service.UpdateRestaurant(id,restaurant));
+                return Ok(await service.UpdateRestaurantAsync(id,restaurant));
             }
             catch (NotFoundException ex)
             {

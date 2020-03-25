@@ -78,12 +78,10 @@ namespace RestaurantAPI.Data.Repository
             });
         }
 
-        public DishEntity CreateDish(DishEntity newDish)
+        public void CreateDish(DishEntity newDish)
         {
-            var newId = dishes.OrderByDescending(d => d.Id).FirstOrDefault().Id + 1;
-            newDish.Id = newId;
-            dishes.Add(newDish);
-            return newDish;
+            dbContext.Entry(newDish.Restaurant).State = EntityState.Unchanged;
+            dbContext.Dishes.Add(newDish);
         }
 
         public void CreateRestaurant(RestaurantEntity newRestaurant)
@@ -91,33 +89,41 @@ namespace RestaurantAPI.Data.Repository
             dbContext.Restaurants.Add(newRestaurant);
         }
 
-        public bool DeleteDish(int id)
+        public async Task<bool> DeleteDishAsync(int id)
         {
-            var dish = GetDish(id);
-            return dishes.Remove(dish);
-        }
-
-        public bool DeleteRestaurant(int id)
-        {
-            var restaurantDelete = GetRestaurant(id);
-            restaurants.Remove(restaurantDelete);
+            var dish = await GetDishAsync(id);
+            dbContext.Dishes.Remove(dish);
             return true;
         }
 
-        public DishEntity GetDish(int id)
+        public async Task<bool> DeleteRestaurant(int id)
         {
-            return dishes.SingleOrDefault(d => d.Id == id);
+            var restaurantDelete = await dbContext.Restaurants.FirstOrDefaultAsync( r => r.Id == id);
+            dbContext.Restaurants.Remove(restaurantDelete);
+            return true;
         }
 
-        public IEnumerable<DishEntity> GetDishes(int restaurantId)
+        public async Task<DishEntity> GetDishAsync(int id)
         {
-            //return dishes.Where(d => d.RestaurantId == restaurantId);
-            return null;
+            IQueryable<DishEntity> query = dbContext.Dishes;
+            query = query.Include(d => d.Restaurant);
+
+            query = query.AsNoTracking();
+            return await query.SingleOrDefaultAsync(d => d.Id == id);
         }
 
-        public RestaurantEntity GetRestaurant(int id, bool showDishes = false)
+        public async Task<IEnumerable<DishEntity>> GetDishesAsync(int restaurantId)
         {
-            return  dbContext.Restaurants.FirstOrDefault(r => r.Id == id);
+            IQueryable<DishEntity> query = dbContext.Dishes;
+            query = query.AsNoTracking();
+            return await query.ToArrayAsync(); ;
+        }
+
+        public async Task<RestaurantEntity> GetRestaurantAsync(int id, bool showDishes = false)
+        {
+            IQueryable<RestaurantEntity> query = dbContext.Restaurants;
+            query = query.AsNoTracking();
+            return await query.FirstOrDefaultAsync(r => r.Id == id);
         }
 
         public async Task<IEnumerable<RestaurantEntity>> GetRestaurantsAsync(string orderBy, bool showDishes = false)
@@ -159,21 +165,20 @@ namespace RestaurantAPI.Data.Repository
 
         public bool UpdateDish(DishEntity dish)
         {
-            var res = GetDish(dish.Id);
-            res.Name = dish.Name;
-            res.Price = dish.Price;
-            res.Description = dish.Description;
+            dbContext.Entry(dish.Restaurant).State = EntityState.Unchanged;
+            dbContext.Dishes.Update(dish);
             return true;
-            
         }
 
         public bool UpdateRestaurant(RestaurantEntity restaurant)
         {
-            var res = GetRestaurant(restaurant.Id);
+            /*var res = dbContext.Restaurants.FirstOrDefault(r => r.Id == restaurant.Id);
             res.Name = restaurant.Name ?? res.Name;
             res.Phone = restaurant.Phone ?? res.Phone;
             res.Address = restaurant.Address ?? res.Address;
-            res.Fundation = restaurant.Fundation ?? res.Fundation;
+            res.Fundation = restaurant.Fundation ?? res.Fundation;*/
+
+            dbContext.Restaurants.Update(restaurant);
             return true;
         }
 
