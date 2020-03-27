@@ -43,14 +43,14 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{host}}/api/Restaurants/100222222",
+					"raw": "{{host}}/api/Restaurants/1",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"api",
 						"Restaurants",
-						"100222222"
+						"1"
 					]
 				}
 			},
@@ -271,6 +271,96 @@
 						"Dishes",
 						"3"
 					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateUser",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"Email\":\"gaspar@gmail.com\",\n\t\"Password\":\"Gas!23\",\n\t\"ConfirmPassword\":\"Gas!23\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}/api/auth/User",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"User"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateRole",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateUserRole",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"UserId\":\"aa6dbbd6-ab3c-4b1a-b1cb-986c77331882\",\n\t\"RoleId\":\"87fae70d-75f9-40e3-a8e8-77d183c7d706\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}/api/auth/UserRole",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"UserRole"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": ""
 				}
 			},
 			"response": []

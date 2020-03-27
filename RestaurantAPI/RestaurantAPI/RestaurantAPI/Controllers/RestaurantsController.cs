@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RestaurantAPI.Exceptions;
@@ -10,6 +11,7 @@ using RestaurantAPI.Services;
 
 namespace RestaurantAPI.Controllers
 {
+    [Authorize(Roles = "SuperAdmin, Admin")]
     [Route("api/[controller]")]
     //[ApiController]
     public class RestaurantsController : Controller
@@ -21,9 +23,11 @@ namespace RestaurantAPI.Controllers
             this.service = service;
         }
 
+       
         [HttpGet()]
         public async Task<ActionResult<IEnumerable<RestaurantModel>>> GetReastuarants(string orderBy = "id", bool showDishes = false)
         {
+            var user = User;
             //IRestauranServe service = new RestaurantService();
             try
             {
