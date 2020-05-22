@@ -12,9 +12,9 @@ namespace GamesAPI.Controllers
     {
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult<IEnumerable<Person>> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new Person[] { new Person() {Age=22, Name = "Pedro" }, new Person() { Age = 33, Name = "Ana"} };
         }
 
         // GET api/values/5
@@ -26,8 +26,9 @@ namespace GamesAPI.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult Post([FromBody] Person value)
         {
+            return Created("new", value);
         }
 
         // PUT api/values/5
